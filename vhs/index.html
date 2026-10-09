@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lindsey Smith · clever girl</title>
+  <meta name="description" content="Lindsey Smith: software engineer, professional cat herder, quietly resilient. Oregon.">
+  <meta property="og:title" content="Lindsey Smith · clever girl">
+  <meta property="og:description" content="Software engineer, professional cat herder, quietly resilient.">
+  <meta property="og:url" content="https://clevergirl.me">
+  <meta name="theme-color" content="#0d0a10">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23ff3d9a' d='M10 58V20l12 10h20l12-10v38z'/%3E%3Ccircle cx='24' cy='42' r='4' fill='%230d0a10'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%230d0a10'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0a10;
+      --bg-2: #17111c;
+      --card: #1d1524;
+      --line: #3a2a45;
+      --text: #f4e9f1;
+      --muted: #b49fb3;
+      --pink: #ff3d9a;
+      --pink-soft: #ff8cc6;
+      --slime: #9dff6b;
+      --blood: #c4134f;
+      --display: "Shrikhand", "Georgia", serif;
+      --pixel: "Press Start 2P", ui-monospace, monospace;
+      --body: "Space Grotesk", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(1200px 600px at 80% -10%, #3b0d2a 0%, transparent 60%),
+        radial-gradient(900px 500px at -10% 110%, #24102e 0%, transparent 60%),
+        var(--bg);
+      color: var(--text);
+      font: 400 1.0625rem/1.65 var(--body);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* VHS scanlines + grain */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(to bottom, rgba(255,255,255,.025) 0 1px, transparent 1px 3px);
+      z-index: 50;
+    }
+
+    a { color: var(--pink-soft); }
+    a:hover { color: var(--pink); }
+    :focus-visible { outline: 2px dashed var(--slime); outline-offset: 4px; }
+
+    .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+
+    /* VHS on-screen display */
+    .osd {
+      display: flex; justify-content: space-between; align-items: center;
+      font: 10px/1 var(--pixel);
+      letter-spacing: .08em;
+      color: var(--text);
+      opacity: .75;
+      padding-top: 24px;
+    }
+    .rec { display: inline-flex; align-items: center; gap: 8px; }
+    .rec::before {
+      content: ""; width: 10px; height: 10px; border-radius: 50%;
+      background: #ff2a2a; box-shadow: 0 0 10px #ff2a2a;
+      animation: blink 1.2s steps(2, start) infinite;
+    }
+    @keyframes blink { to { visibility: hidden; } }
+
+    /* Hero */
+    .hero { padding: 72px 0 56px; }
+    .eyebrow {
+      font: 11px/1.6 var(--pixel);
+      color: var(--slime);
+      letter-spacing: .06em;
+      margin: 0 0 20px;
+    }
+    .wordmark {
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(4rem, 17vw, 10rem);
+      line-height: .9;
+      margin: 0;
+      color: var(--pink);
+      text-shadow: 0 0 24px rgba(255,61,154,.45), 4px 4px 0 var(--blood);
+      letter-spacing: .02em;
+      position: relative;
+      animation: flicker 6s infinite;
+    }
+    @keyframes flicker {
+      0%, 92%, 100% { opacity: 1; }
+      93% { opacity: .4; }
+      94% { opacity: 1; }
+      96% { opacity: .6; }
+      97% { opacity: 1; }
+    }
+    .intro {
+      font-size: clamp(1.25rem, 3.2vw, 1.6rem);
+      line-height: 1.45;
+      font-weight: 500;
+      max-width: 34ch;
+      margin: 28px 0 0;
+    }
+    .intro strong { color: var(--pink-soft); font-weight: 700; }
+
+    .buttons { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font: 11px/1 var(--pixel);
+      letter-spacing: .04em;
+      text-decoration: none;
+      color: var(--bg);
+      background: var(--pink);
+      padding: 16px 18px;
+      border: 0;
+      box-shadow: 4px 4px 0 var(--blood);
+      transition: transform .08s, box-shadow .08s, background .15s;
+    }
+    .btn:hover { color: var(--bg); background: var(--pink-soft); transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--blood); }
+    .btn:active { transform: translate(3px,3px); box-shadow: 1px 1px 0 var(--blood); }
+    .btn.ghost { background: transparent; color: var(--pink-soft); box-shadow: inset 0 0 0 2px var(--pink); }
+    .btn.ghost:hover { color: var(--bg); background: var(--pink); box-shadow: 4px 4px 0 var(--blood); }
+    .btn svg { width: 16px; height: 16px; fill: currentColor; flex: none; }
+
+    /* Sections */
+    section { padding: 40px 0; }
+    .label {
+      font: 11px/1 var(--pixel);
+      color: var(--muted);
+      letter-spacing: .08em;
+      margin: 0 0 22px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .label::after { content: ""; flex: 1; height: 2px; background: repeating-linear-gradient(90deg, var(--line) 0 6px, transparent 6px 10px); }
+
+    .grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; align-items: start; }
+
+    /* Character sheet */
+    .sheet {
+      position: relative;
+      background: var(--card);
+      border: 2px solid var(--line);
+      padding: 28px 24px 24px;
+      box-shadow: 8px 8px 0 #000;
+    }
+    .sheet .cat {
+      position: absolute; right: 22px; top: -38px;
+      width: 64px; height: 40px;
+    }
+    .cat .eye { animation: catblink 5s infinite; transform-origin: center; transform-box: fill-box; }
+    @keyframes catblink { 0%, 95%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+
+    .sheet h3 {
+      font: 12px/1.4 var(--pixel);
+      color: var(--pink);
+      margin: 0 0 20px;
+    }
+    .stats { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+    .stats li { display: grid; grid-template-columns: 92px 1fr; gap: 12px; align-items: baseline; }
+    .stats dt, .stats .k { font: 9px/1.5 var(--pixel); color: var(--slime); letter-spacing: .04em; }
+    .stats .v { font-weight: 500; }
+    .stats .v small { display: block; color: var(--muted); font-size: .85rem; font-weight: 400; }
+
+    .bars { margin-top: 24px; display: grid; gap: 12px; }
+    .bar { display: grid; grid-template-columns: 92px 1fr; gap: 12px; align-items: center; }
+    .bar .k { font: 9px/1.5 var(--pixel); color: var(--muted); }
+    .meter { height: 12px; background: #0b070e; border: 2px solid var(--line); position: relative; }
+    .meter span { position: absolute; inset: 0 auto 0 0; background: repeating-linear-gradient(90deg, var(--pink) 0 8px, var(--blood) 8px 10px); }
+
+    .about p { margin: 0 0 16px; }
+    .about p:last-child { margin: 0; }
+    .about .pull {
+      font-family: var(--display);
+      font-size: 2.2rem;
+      line-height: 1.1;
+      color: var(--pink);
+      letter-spacing: .02em;
+      margin-bottom: 18px;
+    }
+
+    /* Inventory */
+    .inventory { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; list-style: none; margin: 0; padding: 0; }
+    .slot {
+      background: var(--bg-2);
+      border: 2px solid var(--line);
+      padding: 18px 14px 14px;
+      text-align: center;
+      transition: border-color .15s, transform .15s;
+    }
+    .slot:hover { border-color: var(--pink); transform: translateY(-3px); }
+    .slot .icon { font-size: 2rem; line-height: 1; display: block; margin-bottom: 10px; }
+    .slot .name { font: 9px/1.6 var(--pixel); color: var(--text); display: block; }
+    .slot .desc { font-size: .85rem; color: var(--muted); display: block; margin-top: 6px; }
+
+    footer {
+      padding: 56px 0 40px;
+      font: 9px/1.8 var(--pixel);
+      color: var(--muted);
+      letter-spacing: .04em;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .konami { opacity: .45; }
+
+    /* Easter egg */
+    .toast {
+      position: fixed; left: 50%; bottom: 28px;
+      transform: translate(-50%, calc(100% + 40px));
+      background: var(--pink); color: var(--bg);
+      font: 12px/1.4 var(--pixel);
+      padding: 16px 20px;
+      box-shadow: 5px 5px 0 var(--blood);
+      transition: transform .3s cubic-bezier(.2,1.4,.4,1);
+      z-index: 60;
+      text-align: center;
+      max-width: calc(100vw - 32px);
+    }
+    .toast.show { transform: translate(-50%, 0); }
+    body.raptor .wordmark { animation: shake .4s 3; }
+    @keyframes shake { 25% { transform: translateX(-6px) rotate(-1deg); } 75% { transform: translateX(6px) rotate(1deg); } }
+
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+      .hero { padding: 48px 0 32px; }
+      .osd { font-size: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before { animation: none !important; transition: none !important; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="osd" aria-hidden="true">
+      <span class="rec">REC</span>
+      <span>SP &nbsp;▶ PLAY</span>
+    </div>
+
+    <header class="hero">
+      <p class="eyebrow">▶ PLAYER 1 HAS ENTERED THE CHAT</p>
+      <h1 class="wordmark">clever girl</h1>
+      <p class="intro">
+        Hi, I'm <strong>Lindsey</strong>. Software engineer by accident, cat herder by trade,
+        <strong>quietly resilient</strong> by necessity.
+      </p>
+      <nav class="buttons" aria-label="Links">
+        <a class="btn" href="https://github.com/leaena">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          GITHUB
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/leaena/">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M0 1.15C0 .52.52 0 1.18 0h13.64C15.48 0 16 .52 16 1.15v13.7c0 .63-.52 1.15-1.18 1.15H1.18C.52 16 0 15.48 0 14.85V1.15zM4.75 13.4V6.17h-2.4v7.23h2.4zM3.55 5.18c.84 0 1.36-.56 1.36-1.25-.02-.71-.52-1.25-1.34-1.25-.82 0-1.36.54-1.36 1.25 0 .7.52 1.25 1.33 1.25h.01zm2.53 8.22h2.4V9.36c0-.21.02-.43.08-.58.17-.43.57-.88 1.23-.88.87 0 1.22.66 1.22 1.64v3.86h2.4V9.26c0-2.22-1.18-3.25-2.76-3.25-1.3 0-1.86.72-2.18 1.21h.02V6.17h-2.4c.03.68 0 7.23 0 7.23z"/></svg>
+          LINKEDIN
+        </a>
+        <a class="btn ghost" href="mailto:lindsey@clevergirl.me">✉ SAY HI</a>
+      </nav>
+    </header>
+
+    <section aria-labelledby="char">
+      <h2 class="label" id="char">CHARACTER SELECT</h2>
+      <div class="grid">
+        <div class="sheet">
+          <svg class="cat" viewBox="0 0 64 40" aria-hidden="true">
+            <path d="M6 40V8l12 10h28L58 8v32z" fill="#ff3d9a"/>
+            <ellipse class="eye" cx="22" cy="28" rx="4" ry="5" fill="#0d0a10"/>
+            <ellipse class="eye" cx="42" cy="28" rx="4" ry="5" fill="#0d0a10"/>
+          </svg>
+          <h3>LINDSEY SMITH</h3>
+          <ul class="stats">
+            <li><span class="k">CLASS</span><span class="v">Cat Herder<small>“Cofounder” on paper. I don't love the word.</small></span></li>
+            <li><span class="k">ORIGIN</span><span class="v">Anthropology<small>I studied people, then wandered into code.</small></span></li>
+            <li><span class="k">XP</span><span class="v">~15 years shipping software<small>Front end at heart; JavaScript keeps pulling me back.</small></span></li>
+            <li><span class="k">BASE</span><span class="v">Oregon<small>Spooky forests included.</small></span></li>
+            <li><span class="k">FUEL</span><span class="v">Diet Coke</span></li>
+          </ul>
+          <div class="bars" aria-label="Stats">
+            <div class="bar"><span class="k">RESILIENCE</span><span class="meter"><span style="width:96%"></span></span></div>
+            <div class="bar"><span class="k">HERDING</span><span class="meter"><span style="width:88%"></span></span></div>
+            <div class="bar"><span class="k">VOLUME</span><span class="meter"><span style="width:22%"></span></span></div>
+          </div>
+        </div>
+
+        <div class="about">
+          <p class="pull">Not an engineer by trade. Been doing it 15 years anyway.</p>
+          <p>
+            My degree is in anthropology, which turns out to be great prep for software:
+            most of the job is figuring out what people actually need and getting a bunch of
+            them pointed the same direction.
+          </p>
+          <p>
+            These days I'm helping build a company, which mostly means doing whatever needs
+            doing, from writing code to herding the cats (sometimes literally).
+          </p>
+          <p>
+            If you got here from my email signature: hello! The best way to reach me is
+            <a href="mailto:lindsey@clevergirl.me">lindsey@clevergirl.me</a>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="inv">
+      <h2 class="label" id="inv">INVENTORY</h2>
+      <ul class="inventory">
+        <li class="slot"><span class="icon" aria-hidden="true">🐈‍⬛</span><span class="name">CATS</span><span class="desc">Both the furry kind and the coworker kind</span></li>
+        <li class="slot"><span class="icon" aria-hidden="true">🔪</span><span class="name">HORROR</span><span class="desc">The scarier the better</span></li>
+        <li class="slot"><span class="icon" aria-hidden="true">🎮</span><span class="name">VIDEO GAMES</span><span class="desc">One more run, I swear</span></li>
+        <li class="slot"><span class="icon" aria-hidden="true">🧶</span><span class="name">YARN</span><span class="desc">Socks, mostly</span></li>
+        <li class="slot"><span class="icon" aria-hidden="true">🧟</span><span class="name">ZOMBIES</span><span class="desc">I have a plan</span></li>
+        <li class="slot"><span class="icon" aria-hidden="true">💖</span><span class="name">PINK</span><span class="desc">Obviously</span></li>
+      </ul>
+    </section>
+
+    <footer>
+      <span>© <span id="yr">2026</span> LINDSEY SMITH · NO RAPTORS WERE HARMED</span>
+      <span class="konami" title="you know what to do">↑↑↓↓←→←→BA</span>
+    </footer>
+  </div>
+
+  <div class="toast" role="status" aria-live="polite" id="toast"></div>
+
+  <script>
+    document.getElementById("yr").textContent = new Date().getFullYear();
+
+    const code = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+    let pos = 0;
+    document.addEventListener("keydown", (e) => {
+      const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      pos = key === code[pos] ? pos + 1 : (key === code[0] ? 1 : 0);
+      if (pos === code.length) {
+        pos = 0;
+        const toast = document.getElementById("toast");
+        toast.textContent = "🦖 Clever girl. +30 lives";
+        document.body.classList.add("raptor");
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+          document.body.classList.remove("raptor");
+        }, 3200);
+      }
+    });
+  </script>
+</body>
+</html>
