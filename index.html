@@ -67,12 +67,20 @@
       right: 4%; top: -4%; height: 190%; aspect-ratio: 1 / 2;
       opacity: .028;
       mix-blend-mode: screen;
-      transition: opacity 1.8s ease;
     }
     .page .figure-in svg { display: block; width: 100%; height: 100%; }
     .page p { position: relative; z-index: 1; }
-    body.surge .page .figure-in { opacity: .15; transition-duration: .3s; }
-    body.surge #static { opacity: .14; }
+    /* One shared timeline, so the static and the reflection flicker together */
+    body.surge #static { animation: surge-static 1.4s linear; }
+    body.surge .page .figure-in { animation: surge-figure 1.4s linear; }
+    @keyframes surge-static {
+      0%, 100% { opacity: .07; }
+      8% { opacity: .16; } 16% { opacity: .1; } 24% { opacity: .17; } 62% { opacity: .15; }
+    }
+    @keyframes surge-figure {
+      0%, 100% { opacity: .028; }
+      8% { opacity: .15; } 16% { opacity: .07; } 24% { opacity: .16; } 62% { opacity: .14; }
+    }
     .scene { position: relative; z-index: 1; }
 
     .scene {
@@ -194,7 +202,6 @@
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before { animation: none !important; }
-      .page .figure-in { transition: none; }
     }
   </style>
 </head>
@@ -266,13 +273,12 @@
     tick(); setInterval(tick, 15000);
 
 
-    // Now and then the static surges, and whatever's behind you is a little clearer
+    // Now and then the static surges, and whatever's behind you is a little clearer.
+    // The CSS surge animations both run 1.4s; the class comes off when they finish.
     if (!reduce) {
+      document.getElementById("static").addEventListener("animationend", () => document.body.classList.remove("surge"));
       (function surge() {
-        setTimeout(() => {
-          document.body.classList.add("surge");
-          setTimeout(() => { document.body.classList.remove("surge"); surge(); }, 900 + Math.random() * 700);
-        }, 20000 + Math.random() * 25000);
+        setTimeout(() => { document.body.classList.add("surge"); surge(); }, 20000 + Math.random() * 25000);
       })();
     }
 
