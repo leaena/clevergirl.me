@@ -58,6 +58,23 @@
       background: repeating-linear-gradient(to bottom, rgba(255,255,255,.03) 0 1px, transparent 1px 3px);
     }
 
+
+    /* Something reflected in the screen glass, standing behind you.
+       Barely there; a little clearer when the static surges. */
+    .page { overflow: hidden; }
+    .page .figure-in {
+      position: absolute; z-index: 0; pointer-events: none;
+      right: 4%; top: -4%; height: 190%; aspect-ratio: 1 / 2;
+      opacity: .028;
+      mix-blend-mode: screen;
+      transition: opacity 1.8s ease;
+    }
+    .page .figure-in svg { display: block; width: 100%; height: 100%; }
+    .page p { position: relative; z-index: 1; }
+    body.surge .page .figure-in { opacity: .15; transition-duration: .3s; }
+    body.surge #static { opacity: .14; }
+    .scene { position: relative; z-index: 1; }
+
     .scene {
       min-height: 100svh;
       display: grid;
@@ -177,6 +194,7 @@
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before { animation: none !important; }
+      .page .figure-in { transition: none; }
     }
   </style>
 </head>
@@ -195,6 +213,18 @@
       <span class="sign-bottom">LINDSEY SMITH</span>
 
       <article class="page" aria-label="About Lindsey">
+        <div class="figure-in" aria-hidden="true"><svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMax meet" aria-hidden="true">
+        <defs>
+          <radialGradient id="fig-glow-2" gradientUnits="userSpaceOnUse" cx="218" cy="300" fx="218" fy="190" r="560">
+            <stop offset="0" stop-color="#f3e6ff"/>
+            <stop offset=".35" stop-color="#e0cff5" stop-opacity=".85"/>
+            <stop offset=".8" stop-color="#b9a6d8" stop-opacity=".25"/>
+            <stop offset="1" stop-color="#b9a6d8" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="fig-blur-2" x="-25%" y="-15%" width="150%" height="130%"><feGaussianBlur stdDeviation="8"/></filter>
+        </defs>
+        <path fill="url(#fig-glow-2)" filter="url(#fig-blur-2)" d="M0 800 C 8 590, 56 440, 146 402 C 174 390, 183 368, 185 340 C 186 316, 176 294, 164 272 C 142 226, 140 156, 166 106 C 190 58, 254 54, 278 98 C 300 140, 298 218, 272 264 C 260 288, 250 312, 251 340 C 252 368, 262 390, 290 402 C 354 428, 396 580, 400 800 Z"/>
+      </svg></div>
         <span class="file" aria-hidden="true">chapter_unknown.txt — autosaved 3:33 am</span>
         <p>Software engineer by accident, cat herder by trade, quietly resilient by necessity.</p>
         <p class="note">I started out in anthropology, so I'm really just studying how people and software get along.<span class="cursor" aria-hidden="true"></span></p>
@@ -235,6 +265,16 @@
     const tick = () => clock.textContent = fmt.format(new Date()) + " · Oregon";
     tick(); setInterval(tick, 15000);
 
+
+    // Now and then the static surges, and whatever's behind you is a little clearer
+    if (!reduce) {
+      (function surge() {
+        setTimeout(() => {
+          document.body.classList.add("surge");
+          setTimeout(() => { document.body.classList.remove("surge"); surge(); }, 900 + Math.random() * 700);
+        }, 20000 + Math.random() * 25000);
+      })();
+    }
 
   </script>
 </body>
